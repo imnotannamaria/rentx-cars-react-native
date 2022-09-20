@@ -25,19 +25,16 @@ export function Home() {
 
   const navigation = useNavigation();
 
-  function handleCarDetailsRedirect() {
+  function handleCarDetailsRedirect(car: CarDTO) {
     navigation.dispatch(
       CommonActions.navigate({
-        name: 'CarDetails',
+        name: 'CarDetails', 
+        params: {
+          car
+        }
       })
     )
   }
-
-  /*
-    TODO: 
-      oi Anna do futuro eu estou aqui para te lembrar de usar o 
-      natigation.goBack() para voltar para a tela anterior nas telas
-  */
 
   useEffect(() => {
     async function fetchCars() {
@@ -79,7 +76,7 @@ export function Home() {
           data={cars}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
-            <Car data={item} onPress={handleCarDetailsRedirect}/>
+            <Car data={item} onPress={() => handleCarDetailsRedirect(item)}/>
           )}
         />
       }
